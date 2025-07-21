@@ -1,19 +1,17 @@
-# Astro Starter Kit: Minimal
-
-```sh
-pnpm create astro@latest -- --template minimal
-```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## DEPLOY frontend for gen task ai app
+- Porque Astro?
+  Es muy ligero, su velocidad de compilación es clave, y se adapta a cualquier framework frontend
+- Porque React?
+  intuivo, muchas librerias compatibles, robusto y facil de integrar.
+- Para Deployar:
+  - Generar un archivo `.env` con el contenido del archivo .env.example, a menos que hayas cambiado el pruerto donde se despliega el backend
+  - ejecutar `nvm install` & `nvm use` en el directorio root del proyecto, esto para instalar la versión de nodejs con la que se desarrollo el proyecto.
+  - Ejecutar `pnpm dev` o `npm dev` para desplegar el proyecto localmente en localhost:4321
+- Arquitectura?
+  - sencilla, componentes separados, peticiones separadas, variables de entorno separadas.
+  - Contexto global para almacenar sesiones y datos de usuario usando useContext de React
 
 ## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
 ```text
 /
 ├── public/
@@ -22,13 +20,6 @@ Inside of your Astro project, you'll see the following folders and files:
 │       └── index.astro
 └── package.json
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
@@ -41,7 +32,3 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm preview`         | Preview your build locally, before deploying     |
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
