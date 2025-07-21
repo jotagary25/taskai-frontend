@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { get_tasks_api } from "../api/tasks";
 
 const AuthContext = createContext();
 
@@ -7,7 +8,6 @@ function getUserFromToken(token) {
   if (!token) return null;
   try {
     const payload = jwtDecode(token);
-    console.log(payload);
     return {
       id: payload.user_id,
       email: payload.user,
@@ -22,23 +22,38 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState();
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [tasks, setTasks] = useState([]);
 
-  // Cuando cambia el token en localStorage, actualiza el estado
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    setToken(storedToken);
-    setUser(getUserFromToken(storedToken));
+    if (storedToken) {
+      setToken(storedToken);
+      const user = getUserFromToken(storedToken);
+      setUser(user);
+
+      get_tasks_api(storedToken)
+        .then((res) => {
+          setTasks(res);
+        })
+        .catch((err) => {
+          setTasks([]);
+        });
+    }
     setLoading(false);
   }, []);
 
-  // Login: guarda token
-  const login = (newToken) => {
+  const login = async (newToken) => {
     localStorage.setItem("token", newToken);
     setToken(newToken);
     setUser(getUserFromToken(newToken));
+    const res = await get_tasks_api(newToken);
+    if (res) {
+      setTasks(res);
+    } else {
+      setTasks([]);
+    }
   };
 
-  // Logout: elimina token
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
@@ -48,7 +63,7 @@ export function AuthProvider({ children }) {
   const isAuthenticated = !!token && !!user;
 
   return (
-    <AuthContext.Provider value={{ token, user, login, logout, isAuthenticated, loading }}>
+    <AuthContext.Provider value={{ token, user, login, logout, isAuthenticated, loading, tasks }}>
       {children}
     </AuthContext.Provider>
   );

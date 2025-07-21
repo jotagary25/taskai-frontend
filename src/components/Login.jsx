@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import { useState, useEffect } from "react";
-import { API_URL } from "../config/config";
+import { login_api } from "../api/auth"
 import { useAuth, AuthProvider } from "../context/AuthContext";
 
 export default function Login() {
@@ -17,7 +17,7 @@ function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { login, isAuthenticated, loading: authLoading } = useAuth();
+  const { login, isAuthenticated, loading: authLoading} = useAuth();
 
   useEffect(() => {
     if (!authLoading && isAuthenticated) {
@@ -31,14 +31,9 @@ function LoginForm() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(API_URL + "/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        login(data.access_token);
+      const res = await login_api(email, password);
+      if (res) {
+        login(res);
         window.location.href = "/dashboard";
       } else {
         setError("Usuario o contraseña incorrectos");

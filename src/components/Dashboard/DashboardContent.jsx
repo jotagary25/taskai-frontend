@@ -1,16 +1,15 @@
 import { LogOut, ClipboardList } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import TaskBoard from "./TaskBoard";
+import ChatBoard from "./ChatBoard";
 
 export default function DashboardContent() {
-  const { logout, user } = useAuth();
-
-  // Ejemplo: simulando un usuario
-  // const userEmail = localStorage.getItem("email") || "usuario@demo.com";
+  const { logout, user, tasks } = useAuth();
   const user_email = user?.email || "usuario@mail.com"
   const user_id = user?.id || "123456789"
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-200 via-white to-cyan-100 overflow-hidden">
+    <div className="w-full relative min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-200 via-white to-cyan-100 overflow-hidden">
       <div className="absolute inset-0 flex items-center justify-center -z-10">
         <div className="w-[480px] h-[480px] bg-white/40 rounded-full blur-3xl shadow-2xl" />
       </div>
@@ -48,11 +47,9 @@ export default function DashboardContent() {
 
         {/* Aquí va el contenido de tu dashboard */}
         <div className="w-full flex flex-col gap-4">
-          <div className="bg-indigo-50 rounded-xl p-4 shadow-sm text-indigo-900 font-medium text-center">
-            Aquí podrás ver tus tareas, interactuar con tu agente IA y organizar tu día.
-          </div>
-          <div className="bg-cyan-50 rounded-xl p-4 shadow-sm text-cyan-900 font-medium text-center">
-            Próximamente: Vista de tareas agendadas y chat con tu agente.
+          <div className="w-full mt-6">
+            <ChatBoard />
+            <TaskBoard />
           </div>
         </div>
       </div>
